@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – Cars & Motorbikes for Sale</title>
+<meta name="description" content="Inspected used cars and motorbikes for sale with clear prices. Browse Toyota, Honda, Mazda, Yamaha and Kawasaki, then send an inquiry.">
+<meta property="og:title" content="ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – Cars & Motorbikes for Sale">
+<meta property="og:description" content="Inspected used cars and motorbikes with clear prices. Save your favorites and send one inquiry.">
+<meta property="og:type" content="website">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"AutoDealer","name":"ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ","description":"Used cars and motorbikes for sale.","priceRange":"$1,650 - $46,000"}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@400;600&family=Noto+Sans+Lao:wght@400;700&family=Noto+Sans+Thai:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap">
+<style>
+:root{--bg:#efefea;--surface:#fff;--ink:#121212;--muted:#5d5d58;--red:#d42a0c;--on-red:#fff;--line:#d4d4cc;--ok:#1d7a3a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--surface:#1f1f1f;--ink:#f3f3ee;--muted:#a8a8a0;--red:#ff5a3c;--on-red:#141414;--line:#363636;--ok:#5fd183;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141414;--surface:#1f1f1f;--ink:#f3f3ee;--muted:#a8a8a0;--red:#ff5a3c;--on-red:#141414;--line:#363636;--ok:#5fd183;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Barlow,"Noto Sans Lao","Noto Sans Thai","Noto Sans SC",system-ui,sans-serif}
+h1,h2,h3,.logo,.now{font-family:"Barlow Condensed","Noto Sans Lao","Noto Sans Thai","Noto Sans SC","Arial Narrow",sans-serif}
+button,select,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+header{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:12px 20px;background:var(--ink);color:var(--bg);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.logo{font-weight:800;font-size:1.6rem;letter-spacing:.01em}
+.cartbtn{background:var(--red);color:var(--on-red);border:0;padding:9px 18px;font-weight:600;border-radius:4px}
+.hero{padding:44px 20px 36px;max-width:1100px;margin:0 auto}
+.hero h1{margin:0;font-size:clamp(3rem,12vw,7.5rem);line-height:.88;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+.hero p{max-width:50ch;margin:16px 0 0;color:var(--muted);font-size:1.1rem}
+main{max-width:1100px;margin:0 auto;padding:0 20px 60px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:22px;padding:14px 0;border-top:3px solid var(--ink);border-bottom:1px solid var(--line)}
+.tools button,.tools select{background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:4px;padding:7px 14px;font-weight:600}
+.tools button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.tools select{margin-left:0}
+#cur{margin-left:auto}
+.note{color:var(--muted);font-size:.9rem;margin:-8px 0 16px}
+.pic svg{max-height:140px}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column}
+.pic{height:170px;display:grid;place-items:center;font-size:5.5rem;position:relative}
+.tag{position:absolute;top:0;left:0;background:var(--red);color:var(--on-red);font-weight:700;padding:3px 12px;font-size:.9rem}
+.sold{position:absolute;top:0;right:0;background:var(--ink);color:var(--bg);padding:3px 12px;font-size:.9rem}
+.info{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.info h3{margin:0;font-size:1.6rem;line-height:1.05;font-weight:700}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;margin:0;color:var(--muted);font-size:.95rem}
+.specs dt{display:none}
+.price{display:flex;gap:10px;align-items:baseline;margin-top:auto;padding-top:8px}
+.now{font-size:2rem;font-weight:800}
+.now.on{color:var(--red)}
+.was{color:var(--muted);text-decoration:line-through}
+.add{background:var(--ink);color:var(--bg);border:0;padding:12px;font-weight:600;border-radius:4px}
+.add:disabled{opacity:.5;cursor:default}
+.none{grid-column:1/-1;color:var(--muted);padding:30px 0}
+#shade{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .2s;z-index:8}
+#shade.open{opacity:1;pointer-events:auto}
+aside{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);z-index:9;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+aside.open{transform:none}
+.ch{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:3px solid var(--ink)}
+.ch h2{margin:0;font-size:1.8rem;text-transform:uppercase}
+.x{background:none;border:0;color:var(--ink);font-size:1.8rem;line-height:1}
+#items{flex:1;overflow:auto;padding:6px 18px}
+.row{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.row .e{font-size:2.2rem}
+.row small{color:var(--muted)}
+.rm{background:none;border:0;color:var(--red);font-weight:600;display:block;margin-left:auto}
+.empty{color:var(--muted);padding:30px 0;text-align:center}
+.foot{padding:16px 18px;border-top:3px solid var(--ink);display:grid;gap:9px}
+.line{display:flex;justify-content:space-between}
+.line.total{font-weight:700;font-size:1.3rem}
+.save{color:var(--ok);font-weight:600}
+.foot label{display:grid;gap:3px;font-weight:600;font-size:.9rem}
+.foot input{padding:10px;border:2px solid var(--ink);border-radius:4px;background:var(--bg);color:var(--ink)}
+.pay{background:var(--red);color:var(--on-red);border:0;padding:14px;font-weight:700;font-size:1.05rem;border-radius:4px}
+.pay:disabled{opacity:.45;cursor:not-allowed}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,40px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:4px;opacity:0;transition:.2s;z-index:12;pointer-events:none;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.lang{display:flex;gap:4px}
+.lang button{background:transparent;color:var(--bg);border:1px solid var(--bg);padding:6px 10px;font-weight:600;border-radius:4px;font-size:.85rem}
+.lang button[aria-pressed="true"]{background:var(--bg);color:var(--ink)}
+.hero h1{overflow-wrap:anywhere}
+html:not([lang="en"]) .hero h1{font-size:clamp(2.4rem,9vw,5.5rem);line-height:1.15}
+.cartbtn.hist{background:transparent;color:var(--bg);border:2px solid var(--bg)}
+#hlist{flex:1;overflow:auto;padding:10px 18px;display:grid;gap:14px;align-content:start}
+.ord{border:1px solid var(--line);padding:12px;display:grid;gap:6px}
+.ord small{color:var(--muted)}
+.oh{display:flex;justify-content:space-between;align-items:center}
+.st{background:var(--ok);color:var(--surface);font-size:.8rem;font-weight:600;padding:2px 10px;border-radius:99px}
+.ord ul{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.ord li{display:flex;justify-content:space-between;gap:10px}
+.clr{background:none;border:2px solid var(--ink);color:var(--ink);padding:10px;font-weight:600;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ</div>
+  <div class="lang" id="lang" role="group" aria-label="Language"><button data-l="en">EN</button><button data-l="lo">ລາວ</button><button data-l="th">ไทย</button><button data-l="zh">中文</button></div>
+  <div style="display:flex;gap:8px"><button class="cartbtn hist" id="hopen" aria-label="Open order history" data-i18n="orders">Orders</button><button class="cartbtn" id="open" aria-label="Open cart"><span data-i18n="cart">Cart</span> (<span id="count">0</span>)</button></div>
+</header>
+<section class="hero">
+  <h1><span data-i18n="h1a">Cars &amp; bikes.</span><br><span data-i18n="h1b">Priced to go.</span></h1>
+  <p data-i18n="hp">Inspected used vehicles with clear prices. Save the ones you like to your cart, then send one inquiry and we will call you.</p>
+</section>
+<main>
+  <div class="tools">
+    <div id="bar" role="group" aria-label="Filter vehicles" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+    <select id="cur" aria-label="Currency"><option value="USD">USD $</option><option value="THB">THB ฿</option><option value="LAK">LAK ₭</option></select>
+    <select id="sort" aria-label="Sort vehicles">
+      <option value="" data-i18n="sortF">Sort: featured</option>
+      <option value="lo" data-i18n="sortLo">Price: low to high</option>
+      <option value="hi" data-i18n="sortHi">Price: high to low</option>
+      <option value="km" data-i18n="sortKm">Lowest mileage</option>
+    </select>
+  </div>
+  <p class="note" data-i18n="rn">Prices in THB and LAK are approximate conversions from USD. The final price is confirmed when you inquire.</p>
+  <div class="grid" id="grid"></div>
+</main>
+<div id="shade"></div>
+<aside id="cart" aria-label="Cart" aria-hidden="true">
+  <div class="ch"><h2 data-i18n="ycart">Your cart</h2><button class="x" id="close" aria-label="Close cart">×</button></div>
+  <div id="items"></div>
+  <div class="foot">
+    <div class="line"><span data-i18n="veh">Vehicles</span><span id="n">0</span></div>
+    <div class="line save" id="saveRow" hidden><span data-i18n="savings">Sale savings</span><span id="save">$0</span></div>
+    <div class="line total"><span data-i18n="total">Total</span><span id="total">$0</span></div>
+    <label><span data-i18n="phone">Phone number</span><input id="tel" type="tel" inputmode="tel" placeholder="+856 20 0000 0000" autocomplete="tel"></label>
+    <button class="pay" id="pay" disabled data-i18n="send">Send inquiry</button>
+  </div>
+</aside>
+<aside id="hist" aria-label="Order history" aria-hidden="true">
+  <div class="ch"><h2 data-i18n="hist">Order history</h2><button class="x" id="hclose" aria-label="Close order history">×</button></div>
+  <div id="hlist"></div>
+  <div class="foot"><button class="clr" id="hclear" data-i18n="clear">Clear history</button></div>
+</aside>
+<div id="toast" role="status"></div>
+<script>
+const V=[
+ {id:1,t:"car",n:"Toyota Hilux Revo 4x4",y:2020,km:58000,f:"Diesel",g:"Automatic",p:26900,s:24500,e:"🛻",bg:"#d6dde6"},
+ {id:2,t:"car",n:"Toyota Camry 2.5 G",y:2019,km:64000,f:"Petrol",g:"Automatic",p:19800,s:null,e:"🚗",bg:"#e6dcd2"},
+ {id:3,t:"car",n:"Honda CR-V Turbo",y:2021,km:32000,f:"Petrol",g:"Automatic",p:28500,s:26900,e:"🚙",bg:"#d4e3d9"},
+ {id:4,t:"car",n:"Mazda 3 Skyactiv",y:2018,km:79000,f:"Petrol",g:"Manual",p:13200,s:11900,e:"🚗",bg:"#e8d4d4"},
+ {id:5,t:"bike",n:"Honda Wave 125i",y:2022,km:9000,f:"Petrol",g:"Manual",p:1650,s:null,e:"🛵",bg:"#e6e2c8"},
+ {id:6,t:"bike",n:"Yamaha Exciter 155",y:2021,km:14000,f:"Petrol",g:"Manual",p:2400,s:2150,e:"🏍️",bg:"#d4dcee"},
+ {id:7,t:"bike",n:"Honda PCX 160",y:2023,km:5000,f:"Petrol",g:"Automatic",p:3900,s:null,e:"🛵",bg:"#dcd4ee"},
+ {id:8,t:"bike",n:"Kawasaki Z400",y:2020,km:11000,f:"Petrol",g:"Manual",p:5200,s:4700,e:"🏍️",bg:"#d4eee6"}
+];
+const BG=["#d6dde6","#e6dcd2","#d4e3d9","#e8d4d4","#e6e2c8","#d4dcee","#dcd4ee","#d4eee6"];
+V.push(...[
+ ["Toyota Vios 1.5 G",2019,52000,"Petrol","Automatic",11900,null,"🚗"],
+ ["Toyota Corolla Altis",2020,41000,"Petrol","Automatic",17500,16200,"🚗"],
+ ["Toyota Fortuner 2.8 4x4",2021,36000,"Diesel","Automatic",41500,38900,"🚙"],
+ ["Toyota Innova Crysta",2018,88000,"Diesel","Manual",21800,null,"🚐"],
+ ["Toyota Yaris Cross",2023,12000,"Petrol","Automatic",24900,null,"🚙"],
+ ["Toyota Land Cruiser Prado",2017,92000,"Diesel","Automatic",46000,43500,"🚙"],
+ ["Honda Civic 1.5 Turbo",2020,47000,"Petrol","Automatic",22400,null,"🚗"],
+ ["Honda City 1.5 V",2021,29000,"Petrol","Automatic",15800,14500,"🚗"],
+ ["Honda HR-V",2022,18000,"Petrol","Automatic",27800,null,"🚙"],
+ ["Honda Accord 2.0",2018,71000,"Petrol","Automatic",18900,17400,"🚗"],
+ ["Mazda CX-5 2.0",2019,62000,"Petrol","Automatic",21500,null,"🚙"],
+ ["Mazda CX-30",2022,15000,"Petrol","Automatic",25600,23900,"🚙"],
+ ["Nissan Navara Pro-4X",2020,55000,"Diesel","Automatic",27500,null,"🛻"],
+ ["Nissan Almera Turbo",2021,26000,"Petrol","Automatic",12400,11200,"🚗"],
+ ["Nissan Kicks",2022,21000,"Petrol","Automatic",20800,null,"🚙"],
+ ["Mitsubishi Triton GLS",2019,69000,"Diesel","Manual",20900,19500,"🛻"],
+ ["Mitsubishi Pajero Sport",2020,51000,"Diesel","Automatic",33900,null,"🚙"],
+ ["Mitsubishi Xpander",2021,33000,"Petrol","Automatic",16900,15700,"🚐"],
+ ["Isuzu D-Max V-Cross",2021,43000,"Diesel","Automatic",25800,null,"🛻"],
+ ["Isuzu MU-X 2.2",2019,78000,"Diesel","Automatic",24500,22900,"🚙"],
+ ["Ford Ranger Wildtrak",2020,60000,"Diesel","Automatic",29900,27500,"🛻"],
+ ["Ford Everest Titanium",2019,84000,"Diesel","Automatic",30500,null,"🚙"],
+ ["Hyundai Tucson 2.0",2021,30000,"Petrol","Automatic",23700,null,"🚙"],
+ ["Kia Sportage",2022,19000,"Petrol","Automatic",26900,24900,"🚙"],
+ ["Suzuki Swift 1.2",2021,24000,"Petrol","Manual",9800,null,"🚗"],
+ ["MG ZS 1.5",2022,17000,"Petrol","Automatic",14900,13500,"🚗"]
+].map((a,i)=>({id:9+i,t:"car",n:a[0],y:a[1],km:a[2],f:a[3],g:a[4],p:a[5],s:a[6],e:a[7],bg:BG[i%BG.length],img:a[8]})));
+const $=id=>document.getElementById(id);
+const RATES={USD:1,THB:32,LAK:21500};
+const SYM={USD:"$",THB:"\u0e3f",LAK:"\u20ad"};
+let cur="USD";
+try{cur=localStorage.getItem("mm_cur")||"USD"}catch(e){}
+if(!RATES[cur])cur="USD";
+const usd=n=>{let v=n*RATES[cur];v=cur==="LAK"?Math.round(v/1000)*1000:Math.round(v);return SYM[cur]+v.toLocaleString("en-US")};
+const price=v=>v.s??v.p;
+let cart=new Set(),cat="All";
+
+const PAL=["#c8102e","#1f3bff","#1f2937","#f5f5f5","#e8a100","#1f8a4c","#6b7280","#7c3aed"];
+function art(v){
+  if(v.img)return `<img src="${v.img}" alt="${v.n}" loading="lazy">`;
+  const c=PAL[v.id%PAL.length],e=v.e;
+  const k=e.includes("🛻")?"p":e.includes("🚙")?"s":e.includes("🚐")?"v":e.includes("🏍")?"m":e.includes("🛵")?"c":"d";
+  const W=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#1d1d1d"/><circle cx="${x}" cy="${y}" r="${r*.5}" fill="#c9c9c9"/>`;
+  const B=d=>`<path d="${d}" fill="${c}" stroke="#0003" stroke-width="1.5"/>`;
+  const G=d=>`<path d="${d}" fill="#cfe6f5"/>`;
+  const L=(h,t)=>`<rect x="216" y="${h}" width="8" height="6" rx="2" fill="#ffe14d"/><rect x="14" y="${t}" width="6" height="6" rx="2" fill="#ff3b30"/>`;
+  let s="";
+  if(k==="d")s=B("M16 82V70Q16 62 28 60L72 56L92 34Q96 30 104 30H148Q156 30 160 34L180 56L212 60Q224 62 224 72V82Z")+G("M98 38L86 55H118V38Z M124 38V55H170L156 38Z")+L(64,66)+W(62,82,17)+W(178,82,17);
+  if(k==="s")s=B("M16 84V62Q16 54 28 52L60 50L74 30Q78 26 86 26H168Q176 26 180 30L196 52L214 56Q226 58 226 70V84Z")+G("M80 34L68 49H112V34Z M118 34V49H160V34Z M166 34V49H190L176 34Z")+L(60,62)+W(64,84,18)+W(180,84,18);
+  if(k==="p")s=B("M14 84V64H88L100 38Q103 34 110 34H142Q150 34 154 40L166 60H214Q226 62 226 74V84Z")+G("M106 40L98 58H128V40Z M134 40V58H158L148 42Z")+`<rect x="14" y="62" width="74" height="4" fill="#0004"/>`+L(66,68)+W(52,84,18)+W(186,84,18);
+  if(k==="v")s=B("M14 86V36Q14 28 22 28H172Q180 28 186 34L206 56Q226 60 226 72V86Z")+G("M28 38h30v18H28z M66 38h30v18H66z M104 38h30v18h-30z M142 38h30v18h-30z M178 38L198 56H178z")+L(64,62)+W(58,86,18)+W(182,86,18);
+  if(k==="c")s=B("M44 72Q50 54 84 54H132L138 74H100Q90 76 84 90L60 92Z")+B("M138 54L156 40L168 44L176 90L156 90L146 64Z")+`<rect x="96" y="82" width="56" height="6" fill="#333"/><rect x="70" y="48" width="50" height="8" rx="4" fill="#222"/><path d="M152 38L166 34" stroke="#333" stroke-width="5" stroke-linecap="round"/><circle cx="172" cy="50" r="4" fill="#ffe14d"/>`+W(60,92,16)+W(180,92,16);
+  if(k==="m")s=`<path d="M186 88L160 48M54 88L100 76" stroke="#888" stroke-width="5" stroke-linecap="round"/><path d="M160 48L150 40" stroke="#333" stroke-width="5" stroke-linecap="round"/><rect x="100" y="64" width="44" height="22" fill="#444"/><rect x="60" y="78" width="44" height="5" fill="#aaa"/>`+B("M92 56Q110 40 140 48L150 60H96Z")+`<path d="M56 56Q70 48 96 54L92 62H58Z" fill="#222"/><circle cx="164" cy="50" r="5" fill="#ffe14d"/>`+W(54,88,19)+W(186,88,19);
+  return `<svg viewBox="0 0 240 120" role="img" aria-label="${v.n}" style="width:88%;height:auto"><ellipse cx="120" cy="104" rx="100" ry="5" fill="#0002"/>${s}</svg>`;
+}
+function drawBar(){
+  $("bar").innerHTML=[["All","all"],["Cars","cars"],["Motorbikes","bikes"],["On sale","sale"]].map(([c,k])=>`<button aria-pressed="${c===cat}" data-c="${c}">${tr(k)}</button>`).join("");
+}
+function drawGrid(){
+  let L=V.filter(v=>cat==="All"||(cat==="Cars"?v.t==="car":cat==="Motorbikes"?v.t==="bike":v.s));
+  const s=$("sort").value;
+  if(s==="lo")L.sort((a,b)=>price(a)-price(b));
+  if(s==="hi")L.sort((a,b)=>price(b)-price(a));
+  if(s==="km")L.sort((a,b)=>a.km-b.km);
+  $("grid").innerHTML=L.length?L.map(v=>{
+    const inC=cart.has(v.id);
+    return `<article class="card"><div class="pic" style="background:${v.bg}" aria-hidden="true">${art(v)}${v.s?`<span class="tag">${tr("save")} ${usd(v.p-v.s)}</span>`:""}</div>
+    <div class="info"><h3>${v.n}</h3>
+    <dl class="specs"><dt>Year</dt><dd style="margin:0">${v.y}</dd><dt>Mileage</dt><dd style="margin:0">${v.km.toLocaleString("en-US")} km</dd><dt>Fuel</dt><dd style="margin:0">${tr(v.f)}</dd><dt>Gearbox</dt><dd style="margin:0">${tr(v.g)}</dd></dl>
+    <div class="price"><span class="now ${v.s?"on":""}">${usd(price(v))}</span>${v.s?`<span class="was">${usd(v.p)}</span>`:""}</div>
+    <button class="add" data-id="${v.id}" ${inC?"disabled":""}>${inC?tr("incart"):tr("add")}</button></div></article>`}).join("")
+    :`<p class="none">${tr("nomatch")}</p>`;
+}
+function drawCart(){
+  const L=V.filter(v=>cart.has(v.id));
+  let tot=0,save=0;
+  $("items").innerHTML=L.length?L.map(v=>{tot+=price(v);save+=v.p-price(v);
+    return `<div class="row"><div class="e">${v.e}</div><div><strong>${v.n}</strong><br><small>${v.y} · ${v.km.toLocaleString("en-US")} km</small></div>
+    <div style="text-align:right"><div>${usd(price(v))}</div><button class="rm" data-rm="${v.id}">${tr("remove")}</button></div></div>`}).join("")
+    :`<p class="empty">${tr("empty")}</p>`;
+  $("count").textContent=L.length;$("n").textContent=L.length;
+  $("total").textContent=usd(tot);
+  $("save").textContent=usd(save);$("saveRow").hidden=save===0;
+  checkPay();
+}
+function checkPay(){$("pay").disabled=!(cart.size&&$("tel").value.replace(/\D/g,"").length>=7)}
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2000)}
+function setCart(o){$("cart").classList.toggle("open",o);$("shade").classList.toggle("open",o);$("cart").setAttribute("aria-hidden",!o)}
+
+$("bar").onclick=e=>{const c=e.target.dataset.c;if(c){cat=c;drawBar();drawGrid()}};
+$("sort").onchange=drawGrid;
+$("grid").onclick=e=>{const id=+e.target.dataset.id;if(id){cart.add(id);drawCart();drawGrid();toast(tr("added"))}};
+$("items").onclick=e=>{const r=e.target.dataset.rm;if(r){cart.delete(+r);drawCart();drawGrid()}};
+$("tel").oninput=checkPay;
+$("open").onclick=()=>setCart(true);
+$("close").onclick=$("shade").onclick=()=>{setCart(false);setHist(false)};
+$("hopen").onclick=()=>{drawHist();setHist(true)};
+$("hclose").onclick=()=>setHist(false);
+$("hclear").onclick=()=>{orders=[];saveOrders();drawHist();toast(tr("cleared"))};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){setCart(false);setHist(false)}});
+$("pay").onclick=()=>{
+  const L=V.filter(v=>cart.has(v.id));
+  orders.unshift({id:"MM-"+Date.now().toString(36).toUpperCase(),d:Date.now(),ph:$("tel").value.replace(/[^\d+\s-]/g,""),items:L.map(v=>({n:v.n,y:v.y,p:price(v)})),t:L.reduce((a,v)=>a+price(v),0)});
+  saveOrders();cart.clear();$("tel").value="";drawCart();drawGrid();setCart(false);toast(tr("sent"))
+};
+let orders=[];
+try{orders=JSON.parse(localStorage.getItem("mm_orders")||"[]")}catch(e){orders=[]}
+function saveOrders(){try{localStorage.setItem("mm_orders",JSON.stringify(orders))}catch(e){}}
+function setHist(o){$("hist").classList.toggle("open",o);$("shade").classList.toggle("open",o);$("hist").setAttribute("aria-hidden",!o)}
+function drawHist(){
+  $("hlist").innerHTML=orders.length?orders.map(o=>`<div class="ord"><div class="oh"><strong>${o.id}</strong><span class="st">${tr("status")}</span></div><small>${new Date(o.d).toLocaleString("en-GB")}</small><ul>${o.items.map(i=>`<li><span>${i.n} (${i.y})</span><span>${usd(i.p)}</span></li>`).join("")}</ul><div class="line total"><span>${tr("total")}</span><span>${usd(o.t)}</span></div><small>${tr("phoneL")}: ${o.ph}</small></div>`).join(""):`<p class="empty">${tr("noord")}</p>`;
+  $("hclear").hidden=!orders.length;
+}
+const T={
+en:{title:"ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – Cars & Motorbikes for Sale",h1a:"Cars & bikes.",h1b:"Priced to go.",hp:"Inspected used vehicles with clear prices. Save the ones you like to your cart, then send one inquiry and we will call you.",orders:"Orders",cart:"Cart",sortF:"Sort: featured",sortLo:"Price: low to high",sortHi:"Price: high to low",sortKm:"Lowest mileage",ycart:"Your cart",veh:"Vehicles",savings:"Sale savings",total:"Total",phone:"Phone number",send:"Send inquiry",hist:"Order history",clear:"Clear history",all:"All",cars:"Cars",bikes:"Motorbikes",sale:"On sale",save:"Save",add:"Add to cart",incart:"In your cart",nomatch:"No vehicles match this filter.",empty:"Your cart is empty. Add a car or motorbike to start.",remove:"Remove",added:"Added to cart",cleared:"History cleared",sent:"Inquiry sent. We will call you soon.",status:"Inquiry sent",phoneL:"Phone",noord:"No orders yet. Your inquiries will appear here.",Diesel:"Diesel",Petrol:"Petrol",Automatic:"Automatic",Manual:"Manual"},
+lo:{title:"ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – ຂາຍລົດ ແລະ ມໍເຕີໄຊ",h1a:"ລົດ ແລະ ມໍເຕີໄຊ.",h1b:"ລາຄາຖືກໃຈ.",hp:"ລົດມືສອງຜ່ານການກວດສອບ ລາຄາຊັດເຈນ. ເກັບຄັນທີ່ຖືກໃຈໄວ້ໃນກະຕ່າ ແລ້ວສົ່ງຄຳຖາມຄັ້ງດຽວ ພວກເຮົາຈະໂທຫາທ່ານ.",orders:"ຄຳສັ່ງຊື້",cart:"ກະຕ່າ",sortF:"ຈັດຮຽງ: ແນະນຳ",sortLo:"ລາຄາ: ຕ່ຳ ຫາ ສູງ",sortHi:"ລາຄາ: ສູງ ຫາ ຕ່ຳ",sortKm:"ໄລຍະທາງຕ່ຳສຸດ",ycart:"ກະຕ່າຂອງທ່ານ",veh:"ຈຳນວນຄັນ",savings:"ສ່ວນຫຼຸດທີ່ປະຢັດ",total:"ລວມ",phone:"ເບີໂທລະສັບ",send:"ສົ່ງຄຳຖາມ",hist:"ປະຫວັດການສັ່ງຊື້",clear:"ລຶບປະຫວັດ",all:"ທັງໝົດ",cars:"ລົດ",bikes:"ມໍເຕີໄຊ",sale:"ຫຼຸດລາຄາ",save:"ປະຢັດ",add:"ເພີ່ມໃສ່ກະຕ່າ",incart:"ຢູ່ໃນກະຕ່າແລ້ວ",nomatch:"ບໍ່ພົບລົດທີ່ກົງກັບຕົວກອງນີ້.",empty:"ກະຕ່າຫວ່າງ. ເພີ່ມລົດ ຫຼື ມໍເຕີໄຊເພື່ອເລີ່ມ.",remove:"ລຶບອອກ",added:"ເພີ່ມໃສ່ກະຕ່າແລ້ວ",cleared:"ລຶບປະຫວັດແລ້ວ",sent:"ສົ່ງຄຳຖາມແລ້ວ. ພວກເຮົາຈະໂທຫາທ່ານໄວໆນີ້.",status:"ສົ່ງຄຳຖາມແລ້ວ",phoneL:"ເບີໂທ",noord:"ຍັງບໍ່ມີຄຳສັ່ງຊື້. ຄຳຖາມທີ່ທ່ານສົ່ງຈະສະແດງຢູ່ບ່ອນນີ້.",Diesel:"ດີເຊວ",Petrol:"ແອັດຊັງ",Automatic:"ເກຍອັດຕະໂນມັດ",Manual:"ເກຍທຳມະດາ"},
+th:{title:"ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – รถยนต์และมอเตอร์ไซค์มือสอง",h1a:"รถยนต์และมอเตอร์ไซค์",h1b:"ราคาเป็นกันเอง",hp:"รถมือสองผ่านการตรวจสภาพ ราคาชัดเจน เก็บคันที่ชอบไว้ในตะกร้า แล้วส่งคำถามครั้งเดียว เราจะโทรกลับหาคุณ",orders:"คำสั่งซื้อ",cart:"ตะกร้า",sortF:"เรียง: แนะนำ",sortLo:"ราคา: ต่ำไปสูง",sortHi:"ราคา: สูงไปต่ำ",sortKm:"ระยะทางน้อยสุด",ycart:"ตะกร้าของคุณ",veh:"จำนวนคัน",savings:"ส่วนลดที่ประหยัดได้",total:"รวม",phone:"เบอร์โทรศัพท์",send:"ส่งคำถาม",hist:"ประวัติคำสั่งซื้อ",clear:"ล้างประวัติ",all:"ทั้งหมด",cars:"รถยนต์",bikes:"มอเตอร์ไซค์",sale:"ลดราคา",save:"ประหยัด",add:"ใส่ตะกร้า",incart:"อยู่ในตะกร้าแล้ว",nomatch:"ไม่พบรถที่ตรงกับตัวกรองนี้",empty:"ตะกร้าว่างเปล่า เพิ่มรถยนต์หรือมอเตอร์ไซค์เพื่อเริ่มต้น",remove:"ลบออก",added:"ใส่ตะกร้าแล้ว",cleared:"ล้างประวัติแล้ว",sent:"ส่งคำถามแล้ว เราจะโทรกลับเร็วๆ นี้",status:"ส่งคำถามแล้ว",phoneL:"โทร",noord:"ยังไม่มีคำสั่งซื้อ คำถามที่คุณส่งจะแสดงที่นี่",Diesel:"ดีเซล",Petrol:"เบนซิน",Automatic:"เกียร์ออโต้",Manual:"เกียร์ธรรมดา"},
+zh:{title:"ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – 二手车与摩托车出售",h1a:"汽车与摩托车。",h1b:"价格实惠。",hp:"经过检测的二手车辆，价格清晰。把喜欢的车加入购物车，提交一次咨询，我们会致电联系您。",orders:"订单",cart:"购物车",sortF:"排序：推荐",sortLo:"价格：从低到高",sortHi:"价格：从高到低",sortKm:"里程最少",ycart:"您的购物车",veh:"车辆数量",savings:"优惠节省",total:"合计",phone:"手机号码",send:"提交咨询",hist:"订单历史",clear:"清除历史",all:"全部",cars:"汽车",bikes:"摩托车",sale:"特价",save:"立省",add:"加入购物车",incart:"已在购物车",nomatch:"没有符合此筛选条件的车辆。",empty:"购物车是空的。添加一辆汽车或摩托车开始吧。",remove:"移除",added:"已加入购物车",cleared:"历史已清除",sent:"咨询已提交，我们会尽快致电您。",status:"咨询已提交",phoneL:"电话",noord:"暂无订单。您提交的咨询会显示在这里。",Diesel:"柴油",Petrol:"汽油",Automatic:"自动挡",Manual:"手动挡"}
+};
+T.en.rn="Prices in THB and LAK are approximate conversions from USD. The final price is confirmed when you inquire.";
+T.lo.rn="ລາຄາເປັນບາດ ແລະ ກີບແມ່ນການປ່ຽນໂດຍປະມານຈາກໂດລາ. ລາຄາສຸດທ້າຍຈະຢືນຢັນຕອນທ່ານສົ່ງຄຳຖາມ.";
+T.th.rn="ราคาเป็นบาทและกีบเป็นการแปลงจากดอลลาร์โดยประมาณ ราคาสุดท้ายจะยืนยันเมื่อคุณส่งคำถาม";
+T.zh.rn="泰铢和老挝基普价格为美元的大致换算，最终价格以您咨询时确认为准。";
+let lang="en";
+try{lang=localStorage.getItem("mm_lang")||"en"}catch(e){}
+if(!T[lang])lang="en";
+function tr(k){return T[lang][k]||T.en[k]||k}
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.title=tr("title");
+  $("cur").value=cur;
+  document.querySelectorAll("[data-i18n]").forEach(e=>{e.textContent=tr(e.dataset.i18n)});
+  document.querySelectorAll("#lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
+  drawBar();drawGrid();drawCart();drawHist();
+}
+$("cur").onchange=e=>{cur=e.target.value;try{localStorage.setItem("mm_cur",cur)}catch(x){}drawGrid();drawCart();drawHist()};
+$("lang").onclick=e=>{const l=e.target.dataset.l;if(l){lang=l;try{localStorage.setItem("mm_lang",l)}catch(x){}applyLang()}};
+applyLang();
+</script>
+</body>
+</html>
