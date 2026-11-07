@@ -37,6 +37,28 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 60px}
 .note{color:var(--muted);font-size:.9rem;margin:-8px 0 16px}
 .pic svg{max-height:140px}
 .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pic,h3[data-det]{cursor:pointer}
+.det{background:transparent;color:var(--ink);border:2px solid var(--ink);padding:10px;font-weight:600;border-radius:4px}
+#dm,#lm,#om{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20;display:grid;place-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+#dm[hidden],#lm[hidden],#om[hidden]{display:none}
+.dbox{background:var(--surface);width:min(560px,100%);max-height:100%;overflow:auto;position:relative}
+.dbox .x{position:absolute;top:8px;right:10px;z-index:2;background:var(--surface);border-radius:50%;width:38px;height:38px}
+.dpic{height:200px;display:grid;place-items:center;position:relative}
+.dpic svg{max-height:170px}
+.dpic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.dbody{padding:18px;display:grid;gap:12px}
+.dbody h2{margin:0;font-size:2rem;line-height:1.1}
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;margin:0}
+.dl .r{display:flex;flex-direction:column;padding:8px 0;border-bottom:1px solid var(--line)}
+.dl dt{color:var(--muted);font-size:.85rem}
+.dl dd{margin:0;font-weight:600}
+.dbody p{margin:0;color:var(--muted)}
+.f{display:grid;gap:4px;font-weight:600;font-size:.9rem}
+.f input:not([type=file]),.f select{padding:10px;border:2px solid var(--ink);border-radius:4px;background:var(--bg);color:var(--ink)}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:.9rem}
+.lbtn{padding:12px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);font-weight:600;border-radius:4px}
+.dbody p.lmsg{color:var(--red);font-weight:600}
+#oidp{max-height:140px;max-width:100%;object-fit:contain}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
 .card{background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column}
 .pic{height:170px;display:grid;place-items:center;font-size:5.5rem;position:relative}
@@ -97,7 +119,7 @@ html:not([lang="en"]) .hero h1{font-size:clamp(2.4rem,9vw,5.5rem);line-height:1.
 <header>
   <div class="logo">ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ</div>
   <div class="lang" id="lang" role="group" aria-label="Language"><button data-l="en">EN</button><button data-l="lo">ລາວ</button><button data-l="th">ไทย</button><button data-l="zh">中文</button></div>
-  <div style="display:flex;gap:8px"><button class="cartbtn hist" id="hopen" aria-label="Open order history" data-i18n="orders">Orders</button><button class="cartbtn" id="open" aria-label="Open cart"><span data-i18n="cart">Cart</span> (<span id="count">0</span>)</button></div>
+  <div style="display:flex;gap:8px"><button class="cartbtn hist" id="lg">Log in</button><button class="cartbtn hist" id="hopen" aria-label="Open order history" data-i18n="orders">Orders</button><button class="cartbtn" id="open" aria-label="Open cart"><span data-i18n="cart">Cart</span> (<span id="count">0</span>)</button></div>
 </header>
 <section class="hero">
   <h1><span data-i18n="h1a">Cars &amp; bikes.</span><br><span data-i18n="h1b">Priced to go.</span></h1>
@@ -125,8 +147,8 @@ html:not([lang="en"]) .hero h1{font-size:clamp(2.4rem,9vw,5.5rem);line-height:1.
     <div class="line"><span data-i18n="veh">Vehicles</span><span id="n">0</span></div>
     <div class="line save" id="saveRow" hidden><span data-i18n="savings">Sale savings</span><span id="save">$0</span></div>
     <div class="line total"><span data-i18n="total">Total</span><span id="total">$0</span></div>
-    <label><span data-i18n="phone">Phone number</span><input id="tel" type="tel" inputmode="tel" placeholder="+856 20 0000 0000" autocomplete="tel"></label>
-    <button class="pay" id="pay" disabled data-i18n="send">Send inquiry</button>
+    
+    <button class="pay" id="pay" disabled data-i18n="co">Checkout</button>
   </div>
 </aside>
 <aside id="hist" aria-label="Order history" aria-hidden="true">
@@ -134,6 +156,33 @@ html:not([lang="en"]) .hero h1{font-size:clamp(2.4rem,9vw,5.5rem);line-height:1.
   <div id="hlist"></div>
   <div class="foot"><button class="clr" id="hclear" data-i18n="clear">Clear history</button></div>
 </aside>
+<div id="lm" role="dialog" aria-modal="true" hidden><div class="dbox"><button class="x" id="lx" aria-label="Close">×</button><div class="dbody" id="lbody"></div></div></div>
+<div id="om" role="dialog" aria-modal="true" aria-labelledby="omt" hidden><div class="dbox"><button class="x" id="ox" aria-label="Close">×</button><div class="dbody">
+<h2 id="omt" data-i18n="ofT">Order details</h2>
+<label class="f"><span data-i18n="fn">First name</span><input id="ofn" autocomplete="given-name"></label>
+<label class="f"><span data-i18n="sn">Surname</span><input id="osn" autocomplete="family-name"></label>
+<label class="f"><span data-i18n="phone">Phone number</span><input id="oph" type="tel" inputmode="tel" autocomplete="tel" placeholder="+856 20 0000 0000"></label>
+<label class="f"><span data-i18n="idc">Photo of ID card</span><input id="oid" type="file" accept="image/*"></label>
+<img id="oidp" alt="" hidden>
+<label class="f"><span data-i18n="payc">Payment channel</span><select id="obk"></select></label>
+<label class="chk"><input type="checkbox" id="ocs"><span data-i18n="cons">I agree to let the shop use my details and ID photo for this purchase.</span></label>
+<p id="oerr" class="lmsg" role="alert"></p>
+<div class="line total"><span data-i18n="total">Total</span><span id="otot"></span></div>
+<button class="pay" id="osub" data-i18n="send">Send inquiry</button>
+</div></div></div>
+<div id="dm" role="dialog" aria-modal="true" aria-labelledby="dmt" hidden>
+  <div class="dbox">
+    <button class="x" id="dx" aria-label="Close">×</button>
+    <div class="dpic" id="dpic"></div>
+    <div class="dbody">
+      <h2 id="dmt"></h2>
+      <div id="dprice"></div>
+      <dl class="dl" id="dl"></dl>
+      <p id="ddesc"></p>
+      <button class="pay" id="dadd"></button>
+    </div>
+  </div>
+</div>
 <div id="toast" role="status"></div>
 <script>
 const V=[
@@ -214,10 +263,11 @@ function drawGrid(){
   if(s==="km")L.sort((a,b)=>a.km-b.km);
   $("grid").innerHTML=L.length?L.map(v=>{
     const inC=cart.has(v.id);
-    return `<article class="card"><div class="pic" style="background:${v.bg}" aria-hidden="true">${art(v)}${v.s?`<span class="tag">${tr("save")} ${usd(v.p-v.s)}</span>`:""}</div>
-    <div class="info"><h3>${v.n}</h3>
+    return `<article class="card"><div class="pic" data-det="${v.id}" style="background:${v.bg}" aria-hidden="true">${art(v)}${v.s?`<span class="tag">${tr("save")} ${usd(v.p-v.s)}</span>`:""}</div>
+    <div class="info"><h3 data-det="${v.id}">${v.n}</h3>
     <dl class="specs"><dt>Year</dt><dd style="margin:0">${v.y}</dd><dt>Mileage</dt><dd style="margin:0">${v.km.toLocaleString("en-US")} km</dd><dt>Fuel</dt><dd style="margin:0">${tr(v.f)}</dd><dt>Gearbox</dt><dd style="margin:0">${tr(v.g)}</dd></dl>
     <div class="price"><span class="now ${v.s?"on":""}">${usd(price(v))}</span>${v.s?`<span class="was">${usd(v.p)}</span>`:""}</div>
+    <button class="det" data-det="${v.id}">${tr("det")}</button>
     <button class="add" data-id="${v.id}" ${inC?"disabled":""}>${inC?tr("incart"):tr("add")}</button></div></article>`}).join("")
     :`<p class="none">${tr("nomatch")}</p>`;
 }
@@ -233,21 +283,21 @@ function drawCart(){
   $("save").textContent=usd(save);$("saveRow").hidden=save===0;
   checkPay();
 }
-function checkPay(){$("pay").disabled=!(cart.size&&$("tel").value.replace(/\D/g,"").length>=7)}
-function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2000)}
+function checkPay(){$("pay").disabled=!cart.size}
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),4000)}
 function setCart(o){$("cart").classList.toggle("open",o);$("shade").classList.toggle("open",o);$("cart").setAttribute("aria-hidden",!o)}
 
 $("bar").onclick=e=>{const c=e.target.dataset.c;if(c){cat=c;drawBar();drawGrid()}};
 $("sort").onchange=drawGrid;
-$("grid").onclick=e=>{const id=+e.target.dataset.id;if(id){cart.add(id);drawCart();drawGrid();toast(tr("added"))}};
+$("grid").onclick=e=>{const dd=e.target.closest("[data-det]");if(dd){openDet(+dd.dataset.det);return}const id=+e.target.dataset.id;if(id){cart.add(id);drawCart();drawGrid();toast(tr("added"))}};
 $("items").onclick=e=>{const r=e.target.dataset.rm;if(r){cart.delete(+r);drawCart();drawGrid()}};
-$("tel").oninput=checkPay;
+
 $("open").onclick=()=>setCart(true);
 $("close").onclick=$("shade").onclick=()=>{setCart(false);setHist(false)};
 $("hopen").onclick=()=>{drawHist();setHist(true)};
 $("hclose").onclick=()=>setHist(false);
 $("hclear").onclick=()=>{orders=[];saveOrders();drawHist();toast(tr("cleared"))};
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){setCart(false);setHist(false)}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){setCart(false);setHist(false);closeDet();$("lm").hidden=true;$("om").hidden=true}});
 $("pay").onclick=()=>{
   const L=V.filter(v=>cart.has(v.id));
   orders.unshift({id:"MM-"+Date.now().toString(36).toUpperCase(),d:Date.now(),ph:$("tel").value.replace(/[^\d+\s-]/g,""),items:L.map(v=>({n:v.n,y:v.y,p:price(v)})),t:L.reduce((a,v)=>a+price(v),0)});
@@ -258,7 +308,7 @@ try{orders=JSON.parse(localStorage.getItem("mm_orders")||"[]")}catch(e){orders=[
 function saveOrders(){try{localStorage.setItem("mm_orders",JSON.stringify(orders))}catch(e){}}
 function setHist(o){$("hist").classList.toggle("open",o);$("shade").classList.toggle("open",o);$("hist").setAttribute("aria-hidden",!o)}
 function drawHist(){
-  $("hlist").innerHTML=orders.length?orders.map(o=>`<div class="ord"><div class="oh"><strong>${o.id}</strong><span class="st">${tr("status")}</span></div><small>${new Date(o.d).toLocaleString("en-GB")}</small><ul>${o.items.map(i=>`<li><span>${i.n} (${i.y})</span><span>${usd(i.p)}</span></li>`).join("")}</ul><div class="line total"><span>${tr("total")}</span><span>${usd(o.t)}</span></div><small>${tr("phoneL")}: ${o.ph}</small></div>`).join(""):`<p class="empty">${tr("noord")}</p>`;
+  $("hlist").innerHTML=orders.length?orders.map(o=>`<div class="ord"><div class="oh"><strong>${o.id}</strong><span class="st">${tr("status")}</span></div><small>${new Date(o.d).toLocaleString("en-GB")}</small><ul>${o.items.map(i=>`<li><span>${i.n} (${i.y})</span><span>${usd(i.p)}</span></li>`).join("")}</ul><div class="line total"><span>${tr("total")}</span><span>${usd(o.t)}</span></div><small>${o.nm?esc(o.nm)+" · ":""}${tr("phoneL")}: ${o.ph}${o.bk?" · "+esc(o.bk):""}</small></div>`).join(""):`<p class="empty">${tr("noord")}</p>`;
   $("hclear").hidden=!orders.length;
 }
 const T={
@@ -271,6 +321,14 @@ T.en.rn="Prices in THB and LAK are approximate conversions from USD. The final p
 T.lo.rn="ລາຄາເປັນບາດ ແລະ ກີບແມ່ນການປ່ຽນໂດຍປະມານຈາກໂດລາ. ລາຄາສຸດທ້າຍຈະຢືນຢັນຕອນທ່ານສົ່ງຄຳຖາມ.";
 T.th.rn="ราคาเป็นบาทและกีบเป็นการแปลงจากดอลลาร์โดยประมาณ ราคาสุดท้ายจะยืนยันเมื่อคุณส่งคำถาม";
 T.zh.rn="泰铢和老挝基普价格为美元的大致换算，最终价格以您咨询时确认为准。";
+Object.assign(T.en,{det:"View details",dBody:"Body type",dYear:"Year",dColor:"Color",dKm:"Mileage",dFuel:"Fuel",dGear:"Gearbox",dEng:"Engine",dSeats:"Seats",dBat:"Battery",dOwn:"Owners",dCond:"Condition",dWar:"Warranty",c0:"Red",c1:"Blue",c2:"Black",c3:"White",c4:"Gold",c5:"Green",c6:"Grey",c7:"Purple",kd:"Sedan",ks:"SUV",kp:"Pickup",kv:"Van",km:"Motorcycle",kc:"Scooter",own1:"1st owner",own2:"2nd owner",insp:"Inspected",war:"6 months",desc:"Inspected and ready to drive. Test drives by appointment. Contact us to confirm the price and availability."});
+Object.assign(T.lo,{det:"ເບິ່ງລາຍລະອຽດ",dBody:"ປະເພດລົດ",dYear:"ປີ",dColor:"ສີ",dKm:"ໄລຍະທາງ",dFuel:"ນ້ຳມັນ",dGear:"ເກຍ",dEng:"ເຄື່ອງຍົນ",dSeats:"ຈຳນວນບ່ອນນັ່ງ",dBat:"ໝໍ້ໄຟ",dOwn:"ເຈົ້າຂອງ",dCond:"ສະພາບ",dWar:"ການຮັບປະກັນ",c0:"ແດງ",c1:"ຟ້າ",c2:"ດຳ",c3:"ຂາວ",c4:"ທອງ",c5:"ຂຽວ",c6:"ເທົາ",c7:"ມ່ວງ",kd:"ລົດເກັງ",ks:"ລົດ SUV",kp:"ລົດກະບະ",kv:"ລົດຕູ້",km:"ມໍເຕີໄຊ",kc:"ສະກູດເຕີ",own1:"ເຈົ້າຂອງຄົນທຳອິດ",own2:"ເຈົ້າຂອງຄົນທີ 2",insp:"ຜ່ານການກວດສອບ",war:"6 ເດືອນ",desc:"ກວດສອບແລ້ວ ພ້ອມໃຊ້ງານ. ນັດທົດລອງຂັບໄດ້. ຕິດຕໍ່ເພື່ອຢືນຢັນລາຄາ ແລະ ສະຕັອກ."});
+Object.assign(T.th,{det:"ดูรายละเอียด",dBody:"ประเภทรถ",dYear:"ปี",dColor:"สี",dKm:"ระยะทาง",dFuel:"เชื้อเพลิง",dGear:"เกียร์",dEng:"เครื่องยนต์",dSeats:"จำนวนที่นั่ง",dBat:"แบตเตอรี่",dOwn:"เจ้าของ",dCond:"สภาพ",dWar:"การรับประกัน",c0:"แดง",c1:"น้ำเงิน",c2:"ดำ",c3:"ขาว",c4:"ทอง",c5:"เขียว",c6:"เทา",c7:"ม่วง",kd:"รถเก๋ง",ks:"รถ SUV",kp:"รถกระบะ",kv:"รถตู้",km:"มอเตอร์ไซค์",kc:"สกู๊ตเตอร์",own1:"เจ้าของคนแรก",own2:"เจ้าของคนที่ 2",insp:"ผ่านการตรวจสภาพ",war:"6 เดือน",desc:"ตรวจสภาพแล้ว พร้อมใช้งาน นัดทดลองขับได้ ติดต่อเพื่อยืนยันราคาและสต็อก"});
+Object.assign(T.zh,{det:"查看详情",dBody:"车型",dYear:"年份",dColor:"颜色",dKm:"里程",dFuel:"燃料",dGear:"变速箱",dEng:"发动机",dSeats:"座位数",dBat:"电瓶",dOwn:"车主",dCond:"车况",dWar:"质保",c0:"红色",c1:"蓝色",c2:"黑色",c3:"白色",c4:"金色",c5:"绿色",c6:"灰色",c7:"紫色",kd:"轿车",ks:"SUV",kp:"皮卡",kv:"面包车",km:"摩托车",kc:"踏板车",own1:"第一任车主",own2:"第二任车主",insp:"已检测",war:"6个月",desc:"已检测，可直接上路。可预约试驾。请联系我们确认价格和库存。"});
+Object.assign(T.en,{login:"Log in",logout:"Log out",lg:"Continue with Google",lf:"Continue with Facebook",lphb:"Continue with phone number",lnm:"Your name",lnote:"Phone sign-in is not verified by SMS yet.",nosetup:"This sign-in is not set up yet. The shop owner must add the app ID first.",fail:"Sign-in failed. Please try again.",sf:"Could not send the order. Please try again.",err2:"Please enter your name and a valid phone number.",hi:"Signed in",needlog:"Please log in before checkout.",co:"Checkout",ofT:"Order details",fn:"First name",sn:"Surname",idc:"Photo of ID card",payc:"Payment channel",selb:"Select a bank",cash:"Cash at showroom",cons:"I agree to let the shop use my details and ID photo for this purchase.",err:"Please fill in every field, add the ID photo and tick the box.",demo:"Demo mode: saved on this device only, not sent to the shop yet."});
+Object.assign(T.lo,{login:"ເຂົ້າສູ່ລະບົບ",logout:"ອອກຈາກລະບົບ",lg:"ເຂົ້າດ້ວຍ Google",lf:"ເຂົ້າດ້ວຍ Facebook",lphb:"ເຂົ້າດ້ວຍເບີໂທລະສັບ",lnm:"ຊື່ຂອງທ່ານ",lnote:"ການເຂົ້າດ້ວຍເບີໂທຍັງບໍ່ໄດ້ຢືນຢັນດ້ວຍ SMS.",nosetup:"ການເຂົ້າລະບົບແບບນີ້ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ. ເຈົ້າຂອງຮ້ານຕ້ອງໃສ່ລະຫັດແອັບກ່ອນ.",fail:"ເຂົ້າລະບົບບໍ່ສຳເລັດ. ກະລຸນາລອງໃໝ່.",sf:"ສົ່ງຄຳສັ່ງຊື້ບໍ່ສຳເລັດ. ກະລຸນາລອງໃໝ່.",err2:"ກະລຸນາໃສ່ຊື່ ແລະເບີໂທທີ່ຖືກຕ້ອງ.",hi:"ເຂົ້າລະບົບແລ້ວ",needlog:"ກະລຸນາເຂົ້າລະບົບກ່ອນສັ່ງຊື້.",co:"ສັ່ງຊື້",ofT:"ຂໍ້ມູນການສັ່ງຊື້",fn:"ຊື່ແທ້",sn:"ນາມສະກຸນ",idc:"ຮູບຖ່າຍບັດປະຊາຊົນ",payc:"ຊ່ອງທາງຊຳລະເງິນ",selb:"ເລືອກທະນາຄານ",cash:"ເງິນສົດທີ່ຮ້ານ",cons:"ຂ້ອຍຍິນຍອມໃຫ້ຮ້ານໃຊ້ຂໍ້ມູນ ແລະຮູບບັດປະຊາຊົນຂອງຂ້ອຍສຳລັບການຊື້ຄັ້ງນີ້.",err:"ກະລຸນາຕື່ມຂໍ້ມູນໃຫ້ຄົບ, ເພີ່ມຮູບບັດປະຊາຊົນ ແລະຕິກຊ່ອງຍິນຍອມ.",demo:"ໂໝດທົດລອງ: ບັນທຶກໃນເຄື່ອງນີ້ເທົ່ານັ້ນ ຍັງບໍ່ໄດ້ສົ່ງໃຫ້ຮ້ານ."});
+Object.assign(T.th,{login:"เข้าสู่ระบบ",logout:"ออกจากระบบ",lg:"เข้าด้วย Google",lf:"เข้าด้วย Facebook",lphb:"เข้าด้วยเบอร์โทรศัพท์",lnm:"ชื่อของคุณ",lnote:"การเข้าด้วยเบอร์โทรยังไม่ได้ยืนยันด้วย SMS",nosetup:"การเข้าสู่ระบบแบบนี้ยังไม่ได้ตั้งค่า เจ้าของร้านต้องใส่รหัสแอปก่อน",fail:"เข้าสู่ระบบไม่สำเร็จ กรุณาลองอีกครั้ง",sf:"ส่งคำสั่งซื้อไม่สำเร็จ กรุณาลองอีกครั้ง",err2:"กรุณากรอกชื่อและเบอร์โทรที่ถูกต้อง",hi:"เข้าสู่ระบบแล้ว",needlog:"กรุณาเข้าสู่ระบบก่อนสั่งซื้อ",co:"สั่งซื้อ",ofT:"ข้อมูลการสั่งซื้อ",fn:"ชื่อจริง",sn:"นามสกุล",idc:"รูปถ่ายบัตรประชาชน",payc:"ช่องทางชำระเงิน",selb:"เลือกธนาคาร",cash:"เงินสดที่ร้าน",cons:"ฉันยินยอมให้ร้านใช้ข้อมูลและรูปบัตรประชาชนของฉันสำหรับการซื้อครั้งนี้",err:"กรุณากรอกข้อมูลให้ครบ แนบรูปบัตรประชาชน และติ๊กช่องยินยอม",demo:"โหมดทดลอง: บันทึกในเครื่องนี้เท่านั้น ยังไม่ได้ส่งให้ร้าน"});
+Object.assign(T.zh,{login:"登录",logout:"退出登录",lg:"使用 Google 登录",lf:"使用 Facebook 登录",lphb:"使用手机号登录",lnm:"您的姓名",lnote:"手机号登录暂未通过短信验证。",nosetup:"此登录方式尚未设置，店主需要先添加应用 ID。",fail:"登录失败，请重试。",sf:"订单发送失败，请重试。",err2:"请输入姓名和有效的手机号。",hi:"已登录",needlog:"请先登录再下单。",co:"去结算",ofT:"订单信息",fn:"名",sn:"姓",idc:"身份证照片",payc:"支付方式",selb:"选择银行",cash:"到店付现金",cons:"我同意店铺为本次购买使用我的信息和身份证照片。",err:"请填写所有信息，上传身份证照片并勾选同意。",demo:"演示模式：仅保存在本设备，尚未发送给店铺。"});
 let lang="en";
 try{lang=localStorage.getItem("mm_lang")||"en"}catch(e){}
 if(!T[lang])lang="en";
@@ -282,9 +340,90 @@ function applyLang(){
   document.querySelectorAll("[data-i18n]").forEach(e=>{e.textContent=tr(e.dataset.i18n)});
   document.querySelectorAll("#lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   drawBar();drawGrid();drawCart();drawHist();
+  if(!$("dm").hidden)openDet(curDet);
+  drawUser();drawBanks();if(!$("lm").hidden)drawLogin();
 }
-$("cur").onchange=e=>{cur=e.target.value;try{localStorage.setItem("mm_cur",cur)}catch(x){}drawGrid();drawCart();drawHist()};
+$("cur").onchange=e=>{cur=e.target.value;try{localStorage.setItem("mm_cur",cur)}catch(x){}drawGrid();drawCart();drawHist();if(!$("dm").hidden)openDet(curDet)};
 $("lang").onclick=e=>{const l=e.target.dataset.l;if(l){lang=l;try{localStorage.setItem("mm_lang",l)}catch(x){}applyLang()}};
+function kind(v){const e=v.e;return e.includes("🛻")?"p":e.includes("🚙")?"s":e.includes("🚐")?"v":e.includes("🏍")?"m":e.includes("🛵")?"c":"d"}
+function spec(v){
+  const k=kind(v),x=v.x||{},bike=k==="m"||k==="c",dz=v.f==="Diesel";
+  const dec=v.n.match(/(\d\.\d)/),cc=v.n.match(/(\d{3})/);
+  const eng=x.engine||(bike?(cc?cc[1]:"150")+" cc":(dec?dec[1]:{d:"1.5",s:"2.0",p:"2.4",v:"2.5"}[k])+" L"+(dz?" Diesel":""));
+  const bat=x.battery||(bike?(k==="m"?"YTX7A-BS 12V 6Ah":"YTZ6V 12V 5Ah"):dz?"N70Z 12V 70Ah":k==="s"?"75D31L 12V 65Ah":"55D23L 12V 60Ah");
+  const seats=x.seats||(bike?2:(/Fortuner|Innova|Pajero|MU-X|Everest|Prado|Xpander/.test(v.n)||k==="v")?7:5);
+  return [["dBody",tr("k"+k)],["dYear",v.y],["dColor",x.color||tr("c"+(v.id%8))],["dKm",v.km.toLocaleString("en-US")+" km"],["dFuel",tr(v.f)],["dGear",tr(v.g)],["dEng",eng],["dSeats",seats],["dBat",bat],["dOwn",tr(v.id%3===0?"own2":"own1")],["dCond",tr("insp")],["dWar",x.warranty||tr("war")]];
+}
+let curDet=0;
+function openDet(id){
+  const v=V.find(z=>z.id===id);if(!v)return;curDet=id;
+  $("dpic").style.background=v.bg;$("dpic").innerHTML=art(v);
+  $("dmt").textContent=v.n;
+  $("dprice").innerHTML=`<span class="now ${v.s?"on":""}">${usd(price(v))}</span>${v.s?` <span class="was">${usd(v.p)}</span>`:""}`;
+  $("dl").innerHTML=spec(v).map(([k,val])=>`<div class="r"><dt>${tr(k)}</dt><dd>${val}</dd></div>`).join("");
+  $("ddesc").textContent=tr("desc");
+  const inC=cart.has(id);$("dadd").textContent=inC?tr("incart"):tr("add");$("dadd").disabled=inC;
+  $("dm").hidden=false;$("dx").focus();
+}
+function closeDet(){$("dm").hidden=true}
+$("dx").onclick=closeDet;
+$("dm").onclick=e=>{if(e.target.id==="dm")closeDet()};
+$("dadd").onclick=()=>{cart.add(curDet);drawCart();drawGrid();toast(tr("added"));closeDet()};
+const CFG={google:'',facebook:'',endpoint:''};
+const BANKS=['BCEL (OnePay)','LDB – Lao Development Bank','JDB – Joint Development Bank','APB – Agricultural Promotion Bank','ACLEDA Bank Lao','Sacombank Lao','Indochina Bank (IB)','Lao-Viet Bank (LVB)','Phongsavanh Bank','Maruhan Japan Bank Lao','BIC Bank Lao','VietinBank Lao','BIDV Lao','ICBC Vientiane','Bank of China Vientiane'];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+let user=null,pend=false;
+try{user=JSON.parse(localStorage.getItem('mm_user')||'null')}catch(e){}
+function saveUser(){try{if(user)localStorage.setItem('mm_user',JSON.stringify(user));else localStorage.removeItem('mm_user')}catch(e){}}
+function loadScript(src,ok,bad){loadScript.d=loadScript.d||{};if(loadScript.d[src]){ok();return}const s=document.createElement('script');s.src=src;s.async=true;s.onload=()=>{loadScript.d[src]=1;ok()};s.onerror=bad;document.head.appendChild(s)}
+function drawUser(){$('lg').textContent=user?user.n.split(' ')[0]:tr('login')}
+function drawBanks(){const o=$('obk'),p=o.value;o.innerHTML=`<option value="">${tr('selb')}</option>`+BANKS.map(b=>`<option>${esc(b)}</option>`).join('')+`<option value="cash">${tr('cash')}</option>`;o.value=p}
+function lmsg(t){const m=$('lmsg');if(m)m.textContent=t}
+function gDone(r){try{const b=r.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');const p=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b),c=>c.charCodeAt(0))));setUser({n:p.name||p.email,e:p.email,p:'Google'})}catch(x){lmsg(tr('fail'))}}
+function setUser(u){user={n:u.n||'User',e:u.e||'',ph:u.ph||'',p:u.p};saveUser();drawUser();$('lm').hidden=true;toast(tr('hi')+': '+user.n);if(pend){pend=false;openOrder()}}
+function drawLogin(){
+  const b=$('lbody');
+  if(user){b.innerHTML=`<h2>${esc(user.n)}</h2><p>${tr('hi')}: ${esc(user.p)}${user.e?' · '+esc(user.e):''}${user.ph?' · '+esc(user.ph):''}</p><button class="pay" data-act="out">${tr('logout')}</button>`;return}
+  b.innerHTML=`<h2>${tr('login')}</h2><p id="lmsg" class="lmsg"></p>`+(CFG.google?`<div id="gbtn"></div>`:`<button class="lbtn" data-act="g">${tr('lg')}</button>`)+`<button class="lbtn" data-act="f">${tr('lf')}</button><label class="f"><span>${tr('lnm')}</span><input id="lnm" autocomplete="name"></label><label class="f"><span>${tr('phone')}</span><input id="lph" type="tel" inputmode="tel" autocomplete="tel" placeholder="+856 20 0000 0000"></label><button class="lbtn" data-act="p">${tr('lphb')}</button><p>${tr('lnote')}</p>`;
+  if(CFG.google)loadScript('https://accounts.google.com/gsi/client',()=>{google.accounts.id.initialize({client_id:CFG.google,callback:gDone});google.accounts.id.renderButton($('gbtn'),{theme:'outline',size:'large'})},()=>lmsg(tr('fail')));
+  if(CFG.facebook)loadScript('https://connect.facebook.net/en_US/sdk.js',()=>FB.init({appId:CFG.facebook,version:'v23.0',cookie:false,xfbml:false}),()=>{});
+}
+function openLogin(msg){drawLogin();$('lm').hidden=false;if(msg)lmsg(msg)}
+$('lg').onclick=()=>openLogin();
+$('lx').onclick=()=>{$('lm').hidden=true};
+$('lm').onclick=e=>{if(e.target.id==='lm')$('lm').hidden=true};
+$('lbody').onclick=e=>{
+  const a=e.target.dataset.act;if(!a)return;
+  if(a==='out'){user=null;saveUser();drawUser();drawLogin();return}
+  if(a==='g'||(a==='f'&&!CFG.facebook)){lmsg(tr('nosetup'));return}
+  if(a==='f'){if(!window.FB){lmsg(tr('fail'));return}FB.login(r=>{if(r.authResponse)FB.api('/me',{fields:'name,email'},m=>setUser({n:m.name,e:m.email,p:'Facebook'}));else lmsg(tr('fail'))},{scope:'public_profile,email'});return}
+  if(a==='p'){const n=$('lnm').value.trim(),ph=$('lph').value.replace(/[^\d+\s-]/g,'');if(!n||ph.replace(/\D/g,'').length<7){lmsg(tr('err2'));return}setUser({n:n,ph:ph,p:'Phone'})}
+};
+function openOrder(){
+  const pn=(user.n||'').split(' ');$('ofn').value=pn[0]||'';$('osn').value=pn.slice(1).join(' ');$('oph').value=user.ph||'';
+  $('oerr').textContent='';
+  $('otot').textContent=usd(V.filter(v=>cart.has(v.id)).reduce((a,v)=>a+price(v),0));
+  drawBanks();setCart(false);$('om').hidden=false;
+}
+$('pay').onclick=()=>{if(!cart.size)return;if(!user){pend=true;setCart(false);openLogin(tr('needlog'));return}openOrder()};
+$('ox').onclick=()=>{$('om').hidden=true};
+$('om').onclick=e=>{if(e.target.id==='om')$('om').hidden=true};
+$('oid').onchange=e=>{const f=e.target.files[0],im=$('oidp');if(f&&f.type.startsWith('image/')){im.src=URL.createObjectURL(f);im.hidden=false}else{im.hidden=true}};
+$('osub').onclick=async()=>{
+  const fn=$('ofn').value.trim(),sn=$('osn').value.trim(),ph=$('oph').value.replace(/[^\d+\s-]/g,''),f=$('oid').files[0],bk=$('obk').value,ok=$('ocs').checked;
+  if(!fn||!sn||ph.replace(/\D/g,'').length<7||!f||!f.type.startsWith('image/')||!bk||!ok){$('oerr').textContent=tr('err');return}
+  const L=V.filter(v=>cart.has(v.id));
+  const o={id:'MM-'+Date.now().toString(36).toUpperCase(),d:Date.now(),nm:fn+' '+sn,ph:ph,bk:bk==='cash'?tr('cash'):bk,items:L.map(v=>({n:v.n,y:v.y,p:price(v)})),t:L.reduce((a,v)=>a+price(v),0)};
+  if(CFG.endpoint){
+    const fd=new FormData();fd.append('order',JSON.stringify(o));fd.append('idcard',f);
+    $('osub').disabled=true;
+    try{const r=await fetch(CFG.endpoint,{method:'POST',body:fd});if(!r.ok)throw 0}catch(x){$('osub').disabled=false;$('oerr').textContent=tr('sf');return}
+    $('osub').disabled=false;
+  }
+  orders.unshift(o);saveOrders();cart.clear();drawCart();drawGrid();
+  $('om').hidden=true;$('oid').value='';$('oidp').hidden=true;$('ocs').checked=false;
+  toast(CFG.endpoint?tr('sent'):tr('demo'));
+};
 applyLang();
 </script>
 </body>
