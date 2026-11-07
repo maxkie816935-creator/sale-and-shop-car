@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#121212">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – Cars & Motorbikes for Sale</title>
 <meta name="description" content="Inspected used cars and motorbikes for sale with clear prices. Browse Toyota, Honda, Mazda, Yamaha and Kawasaki, then send an inquiry.">
 <meta property="og:title" content="ຂາວ ພຶມເສື້ອ ແລະ ຂາວລົດ – Cars & Motorbikes for Sale">
@@ -424,6 +428,7 @@ $('osub').onclick=async()=>{
   $('om').hidden=true;$('oid').value='';$('oidp').hidden=true;$('ocs').checked=false;
   toast(CFG.endpoint?tr('sent'):tr('demo'));
 };
+try{if('serviceWorker' in navigator)window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}catch(e){}
 applyLang();
 </script>
 </body>
